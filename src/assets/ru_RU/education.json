@@ -1,0 +1,13 @@
+{
+    "name": "Образование",
+    "icon": "fa fa-certificate",
+    "data": [
+        {
+            "id":"435cd4dc-e05f-41cb-b7fd-09c6cb286373",
+            "institution": "Томский политехнический университет",
+            "periodS": "2007",
+            "periodE": "2012",
+            "comment": "Закончил с отличием."
+        }
+    ]
+}
