@@ -1,0 +1,18 @@
+{
+    "fio": {
+        "location_ru": "Гуськов Вадим Леонидович",
+        "location_en": "Guskov Vadim Leonidovich"
+    },
+    "position": {
+        "location_ru": "Программист-разработчик 1С",
+        "location_en": "Programmer 1C"
+    },
+    "address": {
+        "location_ru": "Кемеровская обл. г. Кемерово",
+        "location_en": "Mother RUSSIA"
+    },
+    "contact": {
+        "location_ru": "tindir-programmer-1c@yandex.ru",
+        "location_en": "tindir-programmer-1c@yandex.ru"
+    }
+}

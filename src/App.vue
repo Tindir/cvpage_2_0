@@ -17,19 +17,29 @@
         <div class="collapse navbar-collapse" id="navbarsExample03">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#experience">Опыт работы</a>
+              <a class="nav-link" href="#experience">{{ui_lang.experience[currLoc]}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#education">Образование</a>
+              <a class="nav-link" href="#education">{{ui_lang.education[currLoc]}}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#extraskill">Дополнительные навыки</a>
+              <a class="nav-link" href="#extraskill">{{ui_lang.extraskill[currLoc]}}</a>
             </li>
           </ul>
-           <div class="btn-group btn-group-sm">
-              <button type="button" class="btn">En</button>
-              <button type="button" class="btn">Ру</button>
-            </div> 
+          <div class="btn-group btn-group-sm">
+            <button
+              type="button"
+              class="btn"
+              v-bind:class="{'btn-primary' : locBtn_EN_active}"
+              v-on:click="lang_toggle('location_en')"
+            >En</button>
+            <button
+              type="button"
+              class="btn"
+              v-bind:class="{'btn-primary' : locBtn_RU_active}"
+              v-on:click="lang_toggle('location_ru')"
+            >Ру</button>
+          </div>
         </div>
       </nav>
     </header>
@@ -38,45 +48,45 @@
       <div class="row">
         <div class="col-sm-4">
           <about
-            :fio="info.fio"
-            :position="info.position"
-            :address="info.address"
-            :contact="info.contact"
+            :fio="info.fio[currLoc]"
+            :position="info.position[currLoc]"
+            :address="info.address[currLoc]"
+            :contact="info.contact[currLoc]"
           ></about>
         </div>
         <div class="col-sm-8">
           <list id="experience" :data="exp">
             <template v-slot:ListHeader>
-               <i :class="exp.icon"></i>
-                {{exp.name}}
+              <i :class="exp.icon"></i>
+              {{ui_lang.experience[currLoc]}}
             </template>
             <template v-slot:ListBody>
               <div v-for="i in exp.data" v-bind:key="i.id">
-                <expirience :data="i"/>
+                <expirience :data="i" />
               </div>
             </template>
           </list>
           <list id="education" :data="edu">
             <template v-slot:ListHeader>
               <i :class="edu.icon"></i>
-              {{edu.name}}
+              {{ui_lang.education[currLoc]}}
             </template>
             <template v-slot:ListBody>
               <div v-for="i in edu.data" v-bind:key="i.id">
-                <eduсation :data="i"/>
+                <eduсation :data="i" />
               </div>
             </template>
           </list>
-           <list id="extraskill" :data="eskill">
+          <list id="extraskill" :data="eskill">
             <template v-slot:ListHeader>
               <i :class="eskill.icon"></i>
-              {{eskill.name}}
+               {{ui_lang.extraskill[currLoc]}}
             </template>
             <template v-slot:ListBody>
               <div class="row row-cols-1 row-cols-md-2">
-              <template  v-for="i in eskill.data">
-                <eskill :data="i" v-bind:key="i.id"/>
-              </template>
+                <template v-for="i in eskill.data">
+                  <eskill :data="i" v-bind:key="i.id" />
+                </template>
               </div>
             </template>
           </list>
@@ -161,10 +171,11 @@ import expirience from "./components/experience/expirience.vue"
 import eduсation from "./components/education/education.vue";
 import eskill from "./components/eskill/eskill.vue";
 
-import experienceInfo from "./assets/ru_RU/experience.json";
-import aboutInfo from "./assets/ru_RU/about.json";
-import educationInfo from "./assets/ru_RU/education.json";
-import extraskillsInfo from "./assets/ru_RU/extraskills.json";
+import ui_lang_package from "./assets/ui_lang.json";
+import experienceInfo from "./assets/experience.json";
+import aboutInfo from "./assets/about.json";
+import educationInfo from "./assets/education.json";
+import extraskillsInfo from "./assets/extraskills.json";
 
 export default {
   name: "App",
@@ -179,19 +190,45 @@ export default {
 
   data: function() {
     return {
+      currLoc: "location_ru",
       langlist: [
-        "ru_RU",
-        "en_EN"
+        "location_ru",
+        "location_en"
       ],
-      exp: this.getExpienceInfo(),
-      info: this.getAboutInfo(),
-      edu: this.getEducationInfo(),
-      eskill: this.getExtraSkills()
+     ui_lang: "", 
+     exp:"", //this.getExpienceInfo(currLoc),
+     info:"",  //this.getAboutInfo(currLoc),
+     edu:"",  //this.getEducationInfo(currLoc),
+     eskill:"",  //this.getExtraSkills(currLoc)
     };
+  },
+  beforeCreated: function(){
+     
+  },
+  
+  created: function(){
+    
+    this.currLoc = "location_ru"; 
+    this.ui_lang = this.getUiLang();
+    this.exp = this.getExpienceInfo();
+    this.info = this.getAboutInfo();
+    this.edu = this.getEducationInfo();
+    this.eskill = this.getExtraSkills();  
+
   },
 
   methods: {
 
+    resetData: function(){
+      this.exp = this.getExpienceInfo();
+      this.info = this.getAboutInfo();
+      this.edu = this.getEducationInfo();
+      this.eskill = this.getExtraSkills();
+    },
+    getUiLang: function(){
+       var out = ui_lang_package;
+      return out;
+    },
     getExpienceInfo: function() {
       var out = experienceInfo;
       return out;
@@ -209,12 +246,20 @@ export default {
       return out;
     },
     
-    lang_toggle: function(){
-      
+    lang_toggle: function(newLocation){
+      this.currLoc = newLocation;
+      this.resetData();
+    },
 
-    }
-  
   },
+  computed: {
+    locBtn_EN_active:function(){
+      return this.currLoc == "location_en";
+    },
+    locBtn_RU_active:function(){
+      return this.currLoc == "location_ru";
+    }
+  }
 
 };
 </script>
@@ -223,7 +268,7 @@ export default {
 .container {
   margin-top: 55px;
 }
-.nav-link{
+.nav-link {
   color: black;
 }
 </style>

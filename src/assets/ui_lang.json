@@ -1,0 +1,17 @@
+{
+    "experience":{
+        "location_ru": "Опыт работы",
+        "location_en": "Experience"
+    },
+    "education":{
+        "location_ru": "Образование",
+        "location_en": "Education"
+    },
+    "extraskill":{
+        "location_ru": "Образование",
+        "location_en": "Exsta skill"
+    }
+
+
+    
+}
