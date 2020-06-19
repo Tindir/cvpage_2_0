@@ -61,7 +61,7 @@
               {{ui_lang.experience[currLoc]}}
             </template>
             <template v-slot:ListBody>
-              <div v-for="i in exp.data" v-bind:key="i.id">
+              <div v-for="i in exp.data[currLoc]" v-bind:key="i.id">
                 <expirience :data="i" />
               </div>
             </template>

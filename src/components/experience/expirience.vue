@@ -10,8 +10,10 @@
               <i class="fa fa-calendar"></i>
               {{data.s_period}} - {{data.e_period}}
             </h6>
-            <span class>Обязанности:</span>
+            <p class='header'><span>Обязанности:</span></p>
             <span v-html="data.responsibility"></span>
+            <p class='header'><span>Достижения:</span></p>
+            <span v-html="data.progress"></span>
             </div>
           </li>
         </ul>
@@ -31,7 +33,15 @@ export default {
 </script>
 
 <style scoped>
+P {
+  margin: 0em;
+}
 .card {
   margin-top: 1em;
 }
+.header{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
 </style>
